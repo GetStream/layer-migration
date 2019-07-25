@@ -21,12 +21,27 @@ class LayerChat {
     config.headers['Authorization'] = 'Bearer ' + this.token
     try {
       const response = await axios.post(path, data, config)
-      console.log('response', response);
       console.log('data', response.data);
     } catch(e) {
       console.log('whoops', e.response.data);
     }
   }
+
+  async get(path, params) {
+    params['app_uuid'] = this.appUUID;
+    const config = {headers: {}}
+    config.headers['Accept'] = 'application/vnd.layer+json; version=3.0'
+    config.headers['Content-Type'] = 'application/json'
+    config.headers['Authorization'] = 'Bearer ' + this.token
+    config['params'] = params
+    try {
+      const response = await axios.get(path, config)
+      console.log('data', response.data);
+    } catch(e) {
+      console.log('whoops', e.response.data);
+    }
+  }
+
 
   async createConversation(data) {
     const path = this.getAppPath() + '/conversations';
@@ -34,10 +49,20 @@ class LayerChat {
     return result;
   }
 
-  async export() {
-    const path = this.getAppPath() + '/conversations';
-    const result = await this.post(path, data);
+  async exports() {
+    const path = this.getAppPath() + '/exports';
+    const result = await this.get(path, {});
     return result;
+  }
+
+  async createExport() {
+    const path = this.getAppPath() + '/exports';
+    const result = await this.post(path, {});
+    return result;
+  }
+
+  async registerPublicKey() {
+    // TODO
   }
 
 
@@ -45,4 +70,4 @@ class LayerChat {
 }
 
 const l = new LayerChat(process.env.LAYER_APP_ID, process.env.LAYER_TOKEN)
-l.createConversation({participants: ['abcd']})
+l.createExport()
