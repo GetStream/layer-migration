@@ -15,3 +15,5 @@ layer.conversations.create({participants: ['abcd']}, function(err, res) {
     console.log(err || res.body);
   });
 });
+
+console.log(layer);

@@ -1,4 +1,4 @@
-# Layer Migration
+# Layer Chat Migration
 
 This is a work in progress. The automatic import functionality on Stream's side is done. We're working to make it easier to get your data out of Layer. Which is kinda cumbersome as the Layer API client doesn't support exports.
 
