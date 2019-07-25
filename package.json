@@ -1,0 +1,22 @@
+{
+  "name": "layer-migration",
+  "version": "1.0.0",
+  "description": "A tool for migrating from Layer to Stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GetStream/layer-migration.git"
+  },
+  "author": "Nick Parsons",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GetStream/layer-migration/issues"
+  },
+  "homepage": "https://github.com/GetStream/layer-migration#readme",
+  "dependencies": {
+    "layer-api": "^2.3.3"
+  }
+}
