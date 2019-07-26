@@ -23,7 +23,7 @@ openssl genrsa -out layer-export.pem 2048 && openssl rsa -in layer-export-key.pe
 B. As a second step you'll want to lookup your application ID and the Server API token from your Layer Dashboard.
 
 ```
-export LAYER_APP_ID=YOUR_APPI_DHERE (looks like 1dab157e-4d19-11e6-bb33-493b0000asdfasba)
+export LAYER_APP_ID=YOUR_APP_ID_HERE (looks like 1dab157e-4d19-11e6-bb33-493b0000asdfasba)
 export LAYER_TOKEN=YOUR_TOKEN_HERE (2vsm4yLCG24Y44IfSK6w8nBIxAgrVcU20zuPJ3fO8eXXv5Ub)
 ```
 
