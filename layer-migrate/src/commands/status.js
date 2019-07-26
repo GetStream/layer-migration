@@ -15,8 +15,29 @@ class StatusCommand extends Command {
     const l = new LayerChat(process.env.LAYER_APP_ID, process.env.LAYER_TOKEN)
 
     while (true) {
-      const response = await l.exports()
-      this.log('response is', response);
+      const exportList = await l.exports()
+      let allCompleted = true;
+
+      for (let e of exportList) {
+        this.log('export is', e);
+
+        if (e.status === 'completed') {
+          this.log(`congrats, export with id ${e.id} is completed.`)
+
+          this.log(`ENCRYPTED_AES_KEY=${e.encrypted_aes_key}`)
+          this.log(`AES_IV=${e.aes_iv}`)
+
+          this.log(`Your download url is ${e.download_url}`)
+        } else {
+          allCompleted = false
+          this.log(`status for export ${e.id} is ${e.status}`)
+        }
+      }
+      if (allCompleted) {
+        this.log('all exports are completed, byebye')
+        break;
+      }
+      // stop if all are completed
       await timeout(5000)
     }
   }
