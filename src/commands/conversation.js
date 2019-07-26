@@ -1,26 +1,28 @@
-const {Command, flags} = require('@oclif/command')
-const fs = require('fs')
+const { Command, flags } = require('@oclif/command');
 
-const LayerChat = require('../../client')
+const LayerChat = require('../../client');
 
 class ConversationCommand extends Command {
-  async run() {
-    const {flags} = this.parse(ConversationCommand)
+	async run() {
+		const { flags } = this.parse(ConversationCommand);
 
-    const l = new LayerChat(process.env.LAYER_APP_ID, process.env.LAYER_TOKEN)
-    const res = await l.createConversation(flags.data)
+		const l = new LayerChat(
+			process.env.LAYER_APP_ID,
+			process.env.LAYER_TOKEN
+		);
+		const res = await l.createConversation(flags.data);
 
-    this.log(res)
-  }
+		this.log(res);
+	}
 }
 
-ConversationCommand.description = 'creates a new conversation in layer'
+ConversationCommand.description = 'creates a new conversation in layer';
 
 ConversationCommand.flags = {
-  data: flags.string({
-    char: 'd',
-    description: 'the data for your conversation',
-  }),
-}
+	data: flags.string({
+		char: 'd',
+		description: 'the data for your conversation',
+	}),
+};
 
-module.exports = ConversationCommand
+module.exports = ConversationCommand;
