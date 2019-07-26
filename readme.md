@@ -21,12 +21,22 @@ A. You need to generate a key to sign your layer export with:
 openssl genrsa -out layer-export.pem 2048 && openssl rsa -in layer-export-key.pem -pubout -out layer-export.pub
 ```
 
-B. As a second step you'll want to lookup your APP id and the Server API token from your Layer Dashboard.
+B. As a second step you'll want to lookup your application ID and the Server API token from your Layer Dashboard.
 
 ```
-export LAYER_APP_ID=YOURAPPIDHERE (looks like 1dab157e-4d19-11e6-bb33-493b0000asdfasba)
-export LAYER_TOKEN=YOURTOKENHERE (2vsm4yLCG24Y44IfSK6w8nBIxAgrVcU20zuPJ3fO8eXXv5Ub)
+export LAYER_APP_ID=YOUR_APPI_DHERE (looks like 1dab157e-4d19-11e6-bb33-493b0000asdfasba)
+export LAYER_TOKEN=YOUR_TOKEN_HERE (2vsm4yLCG24Y44IfSK6w8nBIxAgrVcU20zuPJ3fO8eXXv5Ub)
 ```
+
+You can find your application ID under the `Keys` section of your Layer dashboard.
+
+![Layer Key](https://i.imgur.com/5wQQvdX.png)
+
+And you can find your Layer token under `Server API`.
+
+![Layer Server API](https://i.imgur.com/lNPcV9T.png)
+
+> Note: You must create the server API token. It will not be automatically generated for you.
 
 C. Register your new key
 
