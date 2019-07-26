@@ -1,6 +1,9 @@
 const RegisterKeyCommand = require('./commands/register-key')
-const {Command, flags} = require('@oclif/command')
+const ExportCommand = require('./commands/export')
+const MessageCommand = require('./commands/message')
+const StatusCommand = require('./commands/status')
 
+const {Command, flags} = require('@oclif/command')
 
 class LayerMigrateCommand extends Command {
   async run() {
@@ -16,9 +19,7 @@ Extra documentation goes here
 `
 
 LayerMigrateCommand.flags = {
-  // add --version flag to show CLI version
   version: flags.version({char: 'v'}),
-  // add --help flag to show CLI version
   help: flags.help({char: 'h'}),
   name: flags.string({char: 'n', description: 'name to print'}),
 }

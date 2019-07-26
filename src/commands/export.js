@@ -1,6 +1,7 @@
 const {Command, flags} = require('@oclif/command')
-var fs = require('fs');
-const LayerChat = require('../../../layer/client')
+const fs = require('fs')
+
+const LayerChat = require('../../client')
 
 class ExportCommand extends Command {
   async run() {
@@ -8,15 +9,12 @@ class ExportCommand extends Command {
 
     const l = new LayerChat(process.env.LAYER_APP_ID, process.env.LAYER_TOKEN)
 
-    const response = await l.createExport()
-    this.log('response is', response);
+    const res = await l.createExport()
+    this.log(res)
   }
 }
 
-
-ExportCommand.description = `Starts a Layer export, note that you need to register a key before this works`
-
-
-
+ExportCommand.description =
+  'starts a layer export – note that you need to register a key before this works'
 
 module.exports = ExportCommand
