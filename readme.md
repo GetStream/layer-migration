@@ -1,6 +1,11 @@
 # Layer Chat Migration
 
-This is a work in progress. The automatic import functionality on Stream's side is done. We're working to make it easier to get your data out of Layer. Which is kinda cumbersome as the Layer API client doesn't support exports.
+[Layer's API is shutting down](https://getstream.io/blog/layer-shutting-down-all-chat-operations/) October 31st leaving many customers in a difficult position.
+This guide shows you how to export your data from Layer and safely migrate to Stream.
+
+This is a work in progress. The automatic import functionality on Stream's side is tested by many customers.
+What's not done yet is the scripts to easily export your data from Layer and the serverless endpoints to sycn data via webhooks.
+This repo will be much easier to use in a couple of days.
 
 ## Step 1 - Layer Chat Data Export
 
