@@ -1,0 +1,55 @@
+{
+  "name": "layer-migrate",
+  "description": "A command line tool for exporting your chat data from Layer and importing it to Stream",
+  "version": "0.1.0",
+  "author": "Thierry Schellenbach @tschellenbach",
+  "bin": {
+    "layer-migrate": "./bin/run"
+  },
+  "bugs": "https://github.com/GetStream/layer-migration/issues",
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^2"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1",
+    "chai": "^4",
+    "eslint": "^5.13",
+    "eslint-config-oclif": "^3.1",
+    "globby": "^10",
+    "mocha": "^5",
+    "nyc": "^13"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src"
+  ],
+  "homepage": "https://github.com/GetStream/layer-migration",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "layer-migrate",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "GetStream/layer-migration",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "eslint .",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
+    "version": "oclif-dev readme && git add README.md"
+  }
+}

@@ -2,10 +2,12 @@ const axios = require('axios');
 var fs = require('fs');
 
 
+/**
+ * A subset of Layer's API functionality, aimed to help you export data from Layer
+ */
 class LayerChat {
-  constructor(appID, token) {
-    this.appID = appID;
-    this.appUUID = appID.split('/')[appID.split('/').length-1]
+  constructor(appUUID, token) {
+    this.appUUID = appUUID;
     this.token = token;
 
     this.baseURL = 'https://api.layer.com'
@@ -95,7 +97,4 @@ class LayerChat {
 
 }
 
-const l = new LayerChat(process.env.LAYER_APP_ID, process.env.LAYER_TOKEN)
-var contents = fs.readFileSync('keys/layer-export-pub', 'utf8');
-
-l.exportStatus('62e69b10-af52-11e9-a367-0242ac110006')
+module.exports = LayerChat

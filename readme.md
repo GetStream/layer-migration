@@ -4,10 +4,10 @@
 This guide shows you how to export your data from Layer and safely migrate to Stream.
 
 This is a work in progress. The automatic import functionality on Stream's side is tested by many customers.
-What's not done yet is the scripts to easily export your data from Layer and the serverless endpoints to sycn data via webhooks.
+What's not done yet is the scripts to easily export your data from Layer and the serverless endpoints to sync data via webhooks.
 This repo will be much easier to use in a couple of days.
 
-## Step 1 - Layer Chat Data Export
+## Step 1 - Layer Chat Data Export, Creating an Export
 
 Install the layer-migrate tool
 
@@ -18,14 +18,14 @@ yarn global add layer-migrate
 A. You need to generate a key to sign your layer export with:
 
 ```
-openssl genrsa -out layer-export-key.pem 2048 && openssl rsa -in layer-export-key.pem -pubout -out layer-export-pub
+openssl genrsa -out layer-export.pem 2048 && openssl rsa -in layer-export-key.pem -pubout -out layer-export.pub
 ```
 
 B. As a second step you'll want to lookup your APP id and the Server API token from your Layer Dashboard.
 
 ```
-export LAYER_APP_ID=layer:///apps/staging/1dab157e-4d19-11e6-bb33-493b000000b4
-export LAYER_TOKEN=2vsm4yLCG24Y44IfSK6w8nBIxAgrVcU20zuPJ3fO8eXXv5Ub
+export LAYER_APP_ID=YOURAPPIDHERE (looks like 1dab157e-4d19-11e6-bb33-493b0000asdfasba)
+export LAYER_TOKEN=YOURTOKENHERE (2vsm4yLCG24Y44IfSK6w8nBIxAgrVcU20zuPJ3fO8eXXv5Ub)
 ```
 
 C. Register your new key
@@ -37,16 +37,22 @@ layer-migrate register-key
 D. Start an export
 
 ```
-layer-migrate start-export
+layer-migrate export
 ```
 
-E. Wait for the export to complete
+## Step 2 - Downloading a Layer Chat Export
+
+A. Wait for the export to complete
 
 ```
-layer-migrate wait
+layer-migrate status
 ```
 
 F. Download the export
+
+```
+wget -O download longfilenamehere
+```
 
 ```
 wget ... url from export
@@ -58,15 +64,15 @@ https://docs.layer.com/reference/server_api/data.out#decrypting-export-archives
 
 ```
 # path to the file you just downloaded
-export ENCRYPTED_TARBALL=downloaded.tar.gz.enc
+export ENCRYPTED_TARBALL=download
 # path for the unencrypted tar
 export OUTPUT_TAR=export.tar.gz
 # path to the private key
-export PRIVATE_KEY_PATH=layer-export-key.pem
+export PRIVATE_KEY_PATH=keys/layer-export-key.pem
 # the encrypted_aes_key from the export json
-export ENCRYPTED_AES_KEY=gbwxlNIYLjFmOfWiprfPY+uiiSIA1q2Gpom0zK3ZPdooO4vPz1s0fic8LduiQVsP2lPgHiSCym0Fv2KYiIutgk3bRwPikF7NUcriQLzT80k0Px5iDaGMEHAboMmVL7yDMP+qDkJ5gUsTIOGKPQKML1kjcLTvHc2j15Fhd3RYAcFaJpGJ2ZJW+Q+Ik91mvxsA6jyjO+v1mIEFhWTOTlSLu3OGFCJxj9oxLo0NqLEQVTfOiqwRGsuTiEMTMtgREP70WX4ZoAO1NgEnTaT4r8A430r6JP6Wcz1u84DOgiacA502XiMwpLQDP72ufYpjByip9LtqFSZvr7DVJkVj+cfhyg==
+export ENCRYPTED_AES_KEY=V5sWiwjTVEur3/YfHvAsqj2tIBAcw5Q0pVnwQT1A03SwrD5PpQKZv9IlN1wFncVmuk+UWM2ZEJXbDUJRrHZktFvG9TTDL4M39HoFDqQNUD2g6Sof6JMmTAmoohHrVBiKDMxHXftuN+K/xnk0XR6xytPGd44R9NLuOVnOSgYldqQzCGHXIutUSfrbji+SWL3bPOJ72PMWolxoB8kVnFzwaiKn8spMzetw5yOsilwcijQy8PqUsDMz6ExKYvTB7N1tKmUccfSQoLG4jRqTlrgVGWpwp/a/kRDN5gsbGasZqi3zRP0tzcSOpAPH2mjfAc6gbrCLkaWPdtzVw3LWDo6HOQ==
 # the aes_iv key from the export json
-export AES_IV=dvZXo11ZNZcSS3qJ6Vy/cw==
+export AES_IV=dcmxMx47CNS6R5d8VcMISA==
 
 openssl enc -in $ENCRYPTED_TARBALL -out $OUTPUT_TAR -d -aes-256-cbc -K `echo $ENCRYPTED_AES_KEY | base64 --decode | openssl rsautl -decrypt -inkey $PRIVATE_KEY_PATH | hexdump -ve '1/1 "%.2x"'` -iv `echo $AES_IV | base64 --decode | hexdump -ve '1/1 "%.2x"'`
 ```
