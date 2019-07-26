@@ -8,9 +8,9 @@ This repo will be much easier to use in a couple of days.
 
 ## TODO
 
-- Status command output should be nicer (Thierry)
-- Serverless implementation for webhooks (Nick)
 - Actually hookup the binary to layer-migrate scope (Nick)
+- Serverless implementation for webhooks (Nick)
+- Nice errors if you forget your api key environment variable (Thierry)
 
 ## Step 1 - Layer Chat Data Export, Creating an Export
 
