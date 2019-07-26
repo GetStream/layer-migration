@@ -19,8 +19,6 @@ class StatusCommand extends Command {
       let allCompleted = true;
 
       for (let e of exportList) {
-        this.log('export is', e);
-
         if (e.status === 'completed') {
           this.log(`congrats, export with id ${e.id} is completed.`)
 
