@@ -7,6 +7,11 @@ This is a work in progress. The automatic import functionality on Stream's side 
 What's not done yet is the scripts to easily export your data from Layer and the serverless endpoints to sync data via webhooks.
 This repo will be much easier to use in a couple of days.
 
+## TODO
+
+- Status command output should be nicer
+-
+
 ## Step 1 - Layer Chat Data Export, Creating an Export
 
 Install the layer-migrate tool
@@ -58,17 +63,22 @@ A. Wait for the export to complete
 layer-migrate status
 ```
 
-F. Download the export
+Note that Layer will also send you an email when the download completes
+
+B. Download the export
+
+Once the export is completed the json will include a download_url.
+Go ahead and download it
 
 ```
-wget -O download longfilenamehere
+wget -O download download_url
 ```
 
 ```
 wget ... url from export
 ```
 
-G. Decrypt the export
+C. Decrypt the export
 
 https://docs.layer.com/reference/server_api/data.out#decrypting-export-archives
 
@@ -98,6 +108,7 @@ Depending on your security preferences you can either send us the decrypted file
 ## Step 3 - Webhooks (optional)
 
 You can start syncing writes from Stream to Layer via webhooks.
+This is especially useful if you have mobile clients where you can't immediately remove the Layer client.
 We're currently working on setting up a serverless example for this.
 
 ## Step 4 - React/ iOS/ React Native
