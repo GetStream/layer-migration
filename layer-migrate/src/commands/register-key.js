@@ -1,6 +1,6 @@
 const {Command, flags} = require('@oclif/command')
 var fs = require('fs');
-const LayerChat = require('../layer/client')
+const LayerChat = require('../../../layer/client')
 
 class RegisterKeyCommand extends Command {
   async run() {
