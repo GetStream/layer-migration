@@ -1,5 +1,5 @@
 {
-  "name": "layer-migration",
+  "name": "layer-migrate",
   "version": "1.0.0",
   "description": "A tool for migrating from Layer to Stream",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/GetStream/layer-migration.git"
   },
-  "author": "Nick Parsons",
+  "author": "Thierry Schellenbach",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/GetStream/layer-migration/issues"
