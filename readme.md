@@ -8,8 +8,9 @@ This repo will be much easier to use in a couple of days.
 
 ## TODO
 
-- Status command output should be nicer
--
+- Status command output should be nicer (Thierry)
+- Serverless implementation for webhooks (Nick)
+- Actually hookup the binary to layer-migrate scope (Nick)
 
 ## Step 1 - Layer Chat Data Export, Creating an Export
 
@@ -22,7 +23,8 @@ yarn global add layer-migrate
 A. You need to generate a key to sign your layer export with:
 
 ```
-openssl genrsa -out layer-export.pem 2048 && openssl rsa -in layer-export-key.pem -pubout -out layer-export.pub
+mkdir keys
+openssl genrsa -out keys/layer-export.pem 2048 && openssl rsa -in keys/layer-export.pem -pubout -out layer-export.pub
 ```
 
 B. As a second step you'll want to lookup your application ID and the Server API token from your Layer Dashboard.

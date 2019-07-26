@@ -25,9 +25,10 @@ class LayerChat {
     config.headers['Authorization'] = 'Bearer ' + this.token
     try {
       const response = await axios.post(path, data, config)
-      console.log('data', response.data);
+      return response.data;
     } catch(e) {
       console.log('whoops', e.response.data);
+      // TODO: raise an error
     }
   }
 
@@ -40,9 +41,10 @@ class LayerChat {
     config.headers['Authorization'] = 'Bearer ' + this.token
     try {
       const response = await axios.put(path, data, config)
-      console.log('data', response.data);
+      return response.data;
     } catch(e) {
       console.log('whoops', e.response.data);
+      // TODO: raise an error
     }
   }
 
@@ -55,15 +57,28 @@ class LayerChat {
     config['params'] = params
     try {
       const response = await axios.get(path, config)
-      console.log('data', response.data);
+      return response.data;
     } catch(e) {
       console.log('whoops', e.response.data);
+      // TODO: raise an error
     }
   }
 
 
   async createConversation(data) {
     const path = this.getAppPath() + '/conversations';
+    const result = await this.post(path, data);
+    return result;
+  }
+
+  async createIdentity(data) {
+    const path = this.getAppPath() + `/users/${data.userID}/identity`;
+    const result = await this.post(path, data);
+    return result;
+  }
+
+  async sendMessage(conversationUUID, data) {
+    const path = this.getAppPath() + `/conversations/${conversationUUID}/messages`;
     const result = await this.post(path, data);
     return result;
   }
