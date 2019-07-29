@@ -69,10 +69,10 @@ Note that Layer will also send you an email when the download completes
 
 B. Download the export
 
-Once the export is completed the JSON will include a download_url. Go ahead and download it.
+Once the export is completed the JSON will include a download_url. You can download the file with the following command:
 
 ```bash
-$ wget -O download.tar.gz.enc download_url
+$ wget -O download.tar.gz.enc DOWNLOAD_URL
 ```
 
 C. Decrypt the export
@@ -131,7 +131,7 @@ Have a look at the serverless folder. It includes a functional example webhook o
 You can set the webhook using this command:
 
 ```bash
-$ layer-migrate webhook --url yourwebhookurl
+$ layer-migrate webhook --url YOUR_WEBHOOK_URL
 ```
 
 And test it like this:
