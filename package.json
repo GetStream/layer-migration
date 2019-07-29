@@ -1,7 +1,7 @@
 {
     "name": "layer-migrate",
     "description": "A command line tool for exporting your chat data from Layer and importing it to Stream",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "author": "Thierry Schellenbach @tschellenbach",
     "bin": {
         "layer-migrate": "./bin/run"
