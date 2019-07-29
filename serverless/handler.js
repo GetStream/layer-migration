@@ -125,23 +125,24 @@ export const layer = async event => {
 
     // Validate the layer webhook data
     // https://docs.layer.com/reference/webhooks/payloads#validating-payload-integrity
-    const signature = event.headers['layer-webhook-signature']
+    const signature = event.headers['layer-webhook-signature'];
     if (!process.env.WEBHOOK_SECRET) {
-      console.log("WEBHOOK secret is not defined");
+        console.log('WEBHOOK secret is not defined');
     }
     const hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
     hmac.update(event.body);
     const correctSignature = hmac.digest('hex');
     if (signature !== correctSignature) {
-      return {
-          statusCode: 200,
-          headers: {
-              'Access-Control-Allow-Origin': '*',
-          },
-          body: JSON.stringify({
-              error: 'Signature was not correct, check your webhook secret and verify the serverless handler uses the same',
-          }),
-      };
+        return {
+            statusCode: 403,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+            body: JSON.stringify({
+                error:
+                    'Signature was not correct, check your webhook secret and verify the serverless handler uses the same',
+            }),
+        };
     }
 
     if (data.event.type !== 'Message.created') {
@@ -166,7 +167,9 @@ export const layer = async event => {
     console.log('converted message', message);
     // lookup the conversation...
     const chatClient = getStreamClient();
-    const streamChannel = chatClient.channel(channel.type, channel.id, {created_by: {id: 'layer_sync', name: 'layer sync'}});
+    const streamChannel = chatClient.channel(channel.type, channel.id, {
+        created_by: { id: 'layer_sync', name: 'layer sync' },
+    });
     await streamChannel.create();
     await streamChannel.sendMessage(message);
 
