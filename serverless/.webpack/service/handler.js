@@ -511,7 +511,7 @@ function () {
             signature = event.headers['layer-webhook-signature'];
 
             if (!process.env.WEBHOOK_SECRET) {
-              console.log("WEBHOOK secret is not defined");
+              console.log('WEBHOOK secret is not defined');
             }
 
             hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
@@ -524,7 +524,7 @@ function () {
             }
 
             return _context.abrupt("return", {
-              statusCode: 200,
+              statusCode: 403,
               headers: {
                 'Access-Control-Allow-Origin': '*'
               },
