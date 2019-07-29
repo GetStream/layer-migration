@@ -136,7 +136,7 @@ Head over to https://dashboard.serverless.com and create an account. Once logged
 
 ![](https://i.imgur.com/UtQnTbJ.png)
 
-To interact with the CLI, you'll then want to install the Serverless CLI using yarn or npm:
+To interact with Serverless, you'll need to install the Serverless CLI using yarn or npm:
 
 ```bash
 $ yarn global add serverless
