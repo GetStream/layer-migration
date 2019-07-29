@@ -8,10 +8,10 @@ We are still working to make it easier to export data from Layer. Following the 
 
 ## TODO
 
--   Test coverage on conversion logic...
+-   Easy uploads of the export to Stream via an API instead of email
 -   Easy setup of React demo app for browsing your data...
 -   Go based generic endpoint run by Stream so you don't need your own webhook
--   Support Layer Parts Content syntax (https://docs.layer.com/reference/webhooks/message.obj#messages)
+-   Test coverage on conversion logic...
 
 ## Step 1 - Layer Chat Data Export / Creating an Export
 
