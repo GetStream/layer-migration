@@ -289,6 +289,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var LayerChat = __webpack_require__(/*! ../src/client */ "../src/client/index.js");
 
+var crypto = __webpack_require__(/*! crypto */ "crypto");
+
 var STREAM_CHAT_TYPE = 'messaging';
 
 function getUUIDFromURL(url) {
@@ -326,9 +328,10 @@ function convertUser(data) {
 }
 
 function convertPartToAttachment(part) {
-  // TODO: Verify how this works
+  // TODO: Support Content system
   // Lot of flexibility in terms of message types...
   // https://docs.layer.com/xdk/webxdk/messages#message-parts
+  // https://docs.layer.com/reference/webhooks/message.obj#messages
   var t = part.mime_type;
   var attachment = Object.assign({}, part);
 
@@ -492,20 +495,47 @@ function () {
   var _ref = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee(event) {
-    var data, channel, user, message, chatClient, streamChannel;
+    var data, signature, hmac, correctSignature, channel, user, message, chatClient, streamChannel;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            data = JSON.parse(event.body); // - validate the payload: https://docs.layer.com/reference/webhooks/payloads#validating-payload-integrity
+            data = JSON.parse(event.body); // - validate the payload
             // - parse the layer webhook event
             // - figure out the corresponding stream channel
             // - convert the message
             // - write the message to Stream
-            // TODO: validate the payload
+            // Validate the layer webhook data
+            // https://docs.layer.com/reference/webhooks/payloads#validating-payload-integrity
 
+            signature = event.headers['layer-webhook-signature'];
+
+            if (!process.env.WEBHOOK_SECRET) {
+              console.log("WEBHOOK secret is not defined");
+            }
+
+            hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
+            hmac.update(event.body);
+            correctSignature = hmac.digest('hex');
+
+            if (!(signature !== correctSignature)) {
+              _context.next = 8;
+              break;
+            }
+
+            return _context.abrupt("return", {
+              statusCode: 200,
+              headers: {
+                'Access-Control-Allow-Origin': '*'
+              },
+              body: JSON.stringify({
+                error: 'Signature was not correct, check your webhook secret and verify the serverless handler uses the same'
+              })
+            });
+
+          case 8:
             if (!(data.event.type !== 'Message.created')) {
-              _context.next = 3;
+              _context.next = 10;
               break;
             }
 
@@ -519,11 +549,11 @@ function () {
               })
             });
 
-          case 3:
-            _context.next = 5;
+          case 10:
+            _context.next = 12;
             return convertChannel(data);
 
-          case 5:
+          case 12:
             channel = _context.sent;
             user = convertUser(data);
             message = convertMessage(data, user);
@@ -538,14 +568,14 @@ function () {
                 name: 'layer sync'
               }
             });
-            _context.next = 15;
+            _context.next = 22;
             return streamChannel.create();
 
-          case 15:
-            _context.next = 17;
+          case 22:
+            _context.next = 24;
             return streamChannel.sendMessage(message);
 
-          case 17:
+          case 24:
             return _context.abrupt("return", {
               statusCode: 200,
               headers: {
@@ -556,7 +586,7 @@ function () {
               })
             });
 
-          case 18:
+          case 25:
           case "end":
             return _context.stop();
         }
@@ -610,6 +640,17 @@ function () {
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
+
+/***/ }),
+
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("crypto");
 
 /***/ }),
 

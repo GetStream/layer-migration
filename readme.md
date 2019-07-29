@@ -7,11 +7,11 @@ We are still working to make it easier to export data from Layer. Following the 
 
 ## TODO
 
--   More docs on how to setup serverless
--   Webhook signature validation
--   Test coverage on conversion logic...
--   Easy setup of React demo app for browsing your data...
--   Go based generic endpoint run by Stream so you don't need your own webhook
+- More docs on how to setup serverless
+- Test coverage on conversion logic...
+- Easy setup of React demo app for browsing your data...
+- Go based generic endpoint run by Stream so you don't need your own webhook
+- Support Layer Parts Content syntax (https://docs.layer.com/reference/webhooks/message.obj#messages)
 
 ## Step 1 - Layer Chat Data Export / Creating an Export
 
@@ -132,17 +132,34 @@ Have a look at the serverless directory. It includes a functional example of how
 
 You can set the webhook using this command:
 
+<<<<<<< HEAD
+```
+layer-migrate webhook --url yourwebhookurl --secret yourwebhooksecret
+=======
 ```bash
 $ layer-migrate webhook --url YOUR_WEBHOOK_URL
+>>>>>>> f21f9e463a307510a4c0cc4947e4a033f2462487
 ```
 
-And test it like this:
+For the webhook secret you can use any random string. You just need to be sure to use the same secret when validating the webhook signature.
+
+You can test the webhook like this.
 
 ```bash
 $ layer-migrate test-webhook
 ```
 
+<<<<<<< HEAD
 ## Step 5 - React / iOS / React Native
+=======
+<<<<<<< HEAD
+The NGROK tool will come in handy as well.
+
+
+=======
+>>>>>>> f21f9e463a307510a4c0cc4947e4a033f2462487
+## Step 5 - React/ iOS/ React Native
+>>>>>>> ad86414cae4cfb02862076a698bec6c04b81822e
 
 The stream support team will send you a fully functional react example for testing your imported data. You'll want to review these 4 tutorials to learn more about how Stream works:
 
