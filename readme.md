@@ -1,6 +1,6 @@
-# Layer Chat Migration to Stream Chat
+# Layer Chat Migration to [Stream Chat](https://getstream.io/chat/)
 
-[Layer's API is shutting down](https://getstream.io/blog/layer-shutting-down-all-chat-operations/) October 30th leaving many customers in a difficult position. This guide shows you how to export your data from Layer and safely migrate to [Stream](https://getstream.io/chat).
+[Layer's API is shutting down](https://getstream.io/blog/layer-shutting-down-all-chat-operations/) October 30th leaving many customers in a difficult position. This guide shows you how to export your data from Layer and safely migrate to [Stream](https://getstream.io/chat/).
 
 This is a work in progress. The automatic import functionality on Stream's side is tested by many customers.
 
