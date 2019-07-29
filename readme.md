@@ -7,11 +7,10 @@ We are still working to make it easier to export data from Layer. Following the 
 
 ## TODO
 
-- More docs on how to setup serverless
-- Test coverage on conversion logic...
-- Easy setup of React demo app for browsing your data...
-- Go based generic endpoint run by Stream so you don't need your own webhook
-- Support Layer Parts Content syntax (https://docs.layer.com/reference/webhooks/message.obj#messages)
+-   Test coverage on conversion logic...
+-   Easy setup of React demo app for browsing your data...
+-   Go based generic endpoint run by Stream so you don't need your own webhook
+-   Support Layer Parts Content syntax (https://docs.layer.com/reference/webhooks/message.obj#messages)
 
 ## Step 1 - Layer Chat Data Export / Creating an Export
 
@@ -124,21 +123,64 @@ We are currently working on a generic Stream webhook that you can use to sync la
 
 ### Option B - Serverless webhook
 
-Have a look at the serverless directory. It includes a functional example of how you can sync layer to Stream via webhook.
+Have a look at the `serverless` directory. It includes a functional example of how you can sync layer to Stream via webhook.
+
+Serveless provides the necessary infrastructure to deploy to AWS Lambda, Google Cloud Functions, and Azure Functions. In this case, we've created a prebuilt solution for AWS Lambda.
 
 #### Setting up Serverless
+
+Head over to https://dashboard.serverless.com and create an account. Once logged in, follow the prompts:
+
+1. Create a username (this is also known as your tenant name)
+2. Create an application (e.g. layer-to-stream)
+
+![](https://i.imgur.com/UtQnTbJ.png)
+
+To interact with the CLI, you'll then want to install the Serverless CLI using yarn or npm:
+
+```bash
+$ yarn global add serverless
+```
+
+**OR**
+
+```bash
+$ npm install -g serverless
+```
+
+Next, run `sls login` to authenticate the CLI with your account.
+
+In `serverless/serverless.yml` you will want to do the following:
+
+1. Change `service` to your serverless app name
+2. Change `app` to your serverless app name
+3. Change `tenant` to your username (e.g. `stream-layer` to `streamlayer`)
+
+You will also need to add your environment variables to the `serverless.yml` file:
+
+```yaml
+STREAM_API_KEY: YOUR_STREAM_API_KEY_HERE #  your stream api key
+STREAM_API_SECRET: YOUR_STREAM_API_SECRET_HERE # your stream api secret
+LAYER_APP_ID: YOUR_LAYER_APP_ID_HERE # your layer app id
+LAYER_TOKEN: YOUR_LAYER_TOKEN_HERE # your layer app token
+```
+
+> Note: To deploy, ensure that you have the AWS CLI installed and that you have the correct permissions to deploy to API Gateway and Lambda. This is required by Serverless in order for a successful deploy. The easiest way is to grant your user in IAM with admin privileges.
+
+Next, run the deploy command:
+
+```bash
+$ sls deploy
+```
+
+Or you can optionally run the Serverless environment locally with the `yarn start` command. If you are running locally, ensure that you run the `yarn` command to install the necessary dependencies.
 
 ### Testing Your Webhook
 
 You can set the webhook using this command:
 
-<<<<<<< HEAD
-```
-layer-migrate webhook --url yourwebhookurl --secret yourwebhooksecret
-=======
 ```bash
-$ layer-migrate webhook --url YOUR_WEBHOOK_URL
->>>>>>> f21f9e463a307510a4c0cc4947e4a033f2462487
+$ layer-migrate webhook --url yourwebhookurl --secret yourwebhooksecret
 ```
 
 For the webhook secret you can use any random string. You just need to be sure to use the same secret when validating the webhook signature.
@@ -149,17 +191,7 @@ You can test the webhook like this.
 $ layer-migrate test-webhook
 ```
 
-<<<<<<< HEAD
 ## Step 5 - React / iOS / React Native
-=======
-<<<<<<< HEAD
-The NGROK tool will come in handy as well.
-
-
-=======
->>>>>>> f21f9e463a307510a4c0cc4947e4a033f2462487
-## Step 5 - React/ iOS/ React Native
->>>>>>> ad86414cae4cfb02862076a698bec6c04b81822e
 
 The stream support team will send you a fully functional react example for testing your imported data. You'll want to review these 4 tutorials to learn more about how Stream works:
 
