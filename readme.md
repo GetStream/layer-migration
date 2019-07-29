@@ -1,4 +1,4 @@
-# Layer Chat Migration
+# Layer Chat Migration to Stream Chat
 
 [Layer's API is shutting down](https://getstream.io/blog/layer-shutting-down-all-chat-operations/) October 30th leaving many customers in a difficult position. This guide shows you how to export your data from Layer and safely migrate to Stream.
 
@@ -13,7 +13,7 @@ We are still working to make it easier to export data from Layer. Following the 
 -   Easy setup of React demo app for browsing your data...
 -   Go based generic endpoint run by Stream so you don't need your own webhook
 
-## Step 1 - Layer Chat Data Export, Creating an Export
+## Step 1 - Layer Chat Data Export / Creating an Export
 
 Install the layer-migrate tool
 
@@ -94,7 +94,7 @@ $ export AES_IV=dcmxMx47CNS6R5d8VcMISA==
 $ openssl enc -in $ENCRYPTED_TARBALL -out $OUTPUT_TAR -d -aes-256-cbc -K `echo $ENCRYPTED_AES_KEY | base64 --decode | openssl rsautl -decrypt -inkey $PRIVATE_KEY_PATH | hexdump -ve '1/1 "%.2x"'` -iv `echo $AES_IV | base64 --decode | hexdump -ve '1/1 "%.2x"'`
 ```
 
-## Step 3 - Create your Stream account
+## Step 3 - Create Your Stream Account
 
 Head over to https://getstream.io/chat and click on the "Sign Up" button.
 
@@ -124,9 +124,11 @@ We are currently working on a generic Stream webhook that you can use to sync la
 
 ### Option B - Serverless webhook
 
-Have a look at the serverless folder. It includes a functional example webhook of how you can sync layer to Stream.
+Have a look at the serverless directory. It includes a functional example of how you can sync layer to Stream via webhook.
 
-### Testing your webhook
+#### Setting up Serverless
+
+### Testing Your Webhook
 
 You can set the webhook using this command:
 
@@ -140,7 +142,7 @@ And test it like this:
 $ layer-migrate test-webhook
 ```
 
-## Step 5 - React/ iOS/ React Native
+## Step 5 - React / iOS / React Native
 
 The stream support team will send you a fully functional react example for testing your imported data. You'll want to review these 4 tutorials to learn more about how Stream works:
 
