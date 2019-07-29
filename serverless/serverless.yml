@@ -1,0 +1,48 @@
+service: layer # https://dashboard.serverless.com
+app: layer # https://dashboard.serverless.com
+tenant: stream # https://dashboard.serverless.com
+
+frameworkVersion: '>=1.32.0 <2.0.0'
+
+provider:
+    name: aws
+    runtime: nodejs8.10
+    stage: prod
+    region: us-east-1
+    memorySize: 3008
+    timeout: 30
+    vpc:
+    environment:
+        STREAM_API_KEY:  #  your stream api key
+        STREAM_API_SECRET:  # your stream api secret
+        LAYER_APP_ID:  # your layer app id
+        LAYER_TOKEN:  # your layer app token
+functions:
+    layer:
+        handler: handler.layer
+        events:
+            - http:
+                  path: /layer
+                  method: POST
+                  cors: true
+    verify:
+        handler: handler.verify
+        events:
+            - http:
+                  path: /layer
+                  method: GET
+                  cors: true
+
+plugins:
+    - serverless-offline
+    - serverless-webpack
+
+custom:
+    webpack:
+        packager: 'yarn'
+        webpackConfig: 'webpack.config.js'
+        includeModules:
+            forceInclude:
+                - '@babel/runtime'
+    serverless-offline:
+        port: 8000

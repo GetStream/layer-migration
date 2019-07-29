@@ -1,0 +1,61 @@
+{
+    "name": "layer-migrate",
+    "description": "A command line tool for exporting your chat data from Layer and importing it to Stream",
+    "version": "1.1.1",
+    "author": "Thierry Schellenbach @tschellenbach",
+    "bin": {
+        "layer-migrate": "./bin/run"
+    },
+    "bugs": "https://github.com/GetStream/layer-migration/issues",
+    "dependencies": {
+        "@babel/runtime": "^7.4.5",
+        "@oclif/command": "^1",
+        "@oclif/config": "^1",
+        "@oclif/plugin-autocomplete": "^0.1.0",
+        "@oclif/plugin-commands": "^1.2.2",
+        "@oclif/plugin-help": "^2.2.0",
+        "axios": "^0.19.0",
+        "layer-api": "^2.3.3"
+    },
+    "devDependencies": {
+        "@oclif/dev-cli": "^1",
+        "@oclif/test": "^1",
+        "babel-eslint": "^10.0.2",
+        "chai": "^4",
+        "eslint": "^5.13",
+        "eslint-plugin-babel": "^5.3.0",
+        "globby": "^10",
+        "mocha": "^5",
+        "nyc": "^13",
+        "prettier": "^1.18.2"
+    },
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "files": [
+        "/bin",
+        "/npm-shrinkwrap.json",
+        "/oclif.manifest.json",
+        "/src"
+    ],
+    "homepage": "https://github.com/GetStream/layer-migration",
+    "keywords": [
+        "oclif"
+    ],
+    "license": "MIT",
+    "main": "src/index.js",
+    "oclif": {
+        "commands": "./src/commands",
+        "bin": "layer-migrate",
+        "plugins": [
+            "@oclif/plugin-help"
+        ]
+    },
+    "repository": "GetStream/layer-migration",
+    "scripts": {
+        "postpack": "rm -f oclif.manifest.json",
+        "posttest": "eslint .",
+        "prepack": "oclif-dev manifest && oclif-dev readme",
+        "lint": "yarn prettier --write --check --config ./.prettierrc \"**/*.js\" && eslint --fix ./src"
+    }
+}
