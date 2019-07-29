@@ -48,7 +48,7 @@ And you can find your Layer token under `Server API`.
 C. Register your new key
 
 ```
-layer-migrate register-key
+$ layer-migrate register-key
 ```
 
 D. Start an export
