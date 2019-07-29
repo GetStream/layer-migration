@@ -17,6 +17,7 @@ provider:
         STREAM_API_SECRET:  # your stream api secret
         LAYER_APP_ID:  # your layer app id
         LAYER_TOKEN:  # your layer app token
+        WEBHOOK_SECRET: abc # your webhook secret
 functions:
     layer:
         handler: handler.layer

@@ -332,14 +332,19 @@ function convertPartToAttachment(part) {
   // Lot of flexibility in terms of message types...
   // https://docs.layer.com/xdk/webxdk/messages#message-parts
   // https://docs.layer.com/reference/webhooks/message.obj#messages
-  var t = part.mime_type;
+  var t = part.mime_type; // start by simply copying the part data
+
   var attachment = Object.assign({}, part);
 
   if (t === 'application/json') {
+    // some layer customers store json in the parts
     attachment = Object.assign(attachment, JSON.parse(part.body));
   } else if (t.indexOf('image') !== -1) {
-    attachment.type = 'image';
-    attachment.thumb_url = part.url;
+    // support the content style part https://docs.layer.com/reference/webhooks/message.obj#messages
+    if (part.content) {
+      attachment.type = 'image';
+      attachment.thumb_url = part.content.download_url;
+    }
   }
 
   return attachment;
