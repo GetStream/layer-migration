@@ -1,6 +1,7 @@
 import { StreamChat } from 'stream-chat';
 import axios from 'axios';
 const LayerChat = require('../src/client');
+const crypto = require('crypto');
 
 const STREAM_CHAT_TYPE = 'messaging';
 
@@ -38,9 +39,10 @@ function convertUser(data) {
 }
 
 function convertPartToAttachment(part) {
-    // TODO: Verify how this works
+    // TODO: Support Content system
     // Lot of flexibility in terms of message types...
     // https://docs.layer.com/xdk/webxdk/messages#message-parts
+    // https://docs.layer.com/reference/webhooks/message.obj#messages
     const t = part.mime_type;
     let attachment = Object.assign({}, part);
     if (t === 'application/json') {
@@ -115,13 +117,32 @@ async function convertChannel(data) {
 export const layer = async event => {
     const data = JSON.parse(event.body);
 
-    // - validate the payload: https://docs.layer.com/reference/webhooks/payloads#validating-payload-integrity
+    // - validate the payload
     // - parse the layer webhook event
     // - figure out the corresponding stream channel
     // - convert the message
     // - write the message to Stream
 
-    // TODO: validate the payload
+    // Validate the layer webhook data
+    // https://docs.layer.com/reference/webhooks/payloads#validating-payload-integrity
+    const signature = event.headers['layer-webhook-signature']
+    if (!process.env.WEBHOOK_SECRET) {
+      console.log("WEBHOOK secret is not defined");
+    }
+    const hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
+    hmac.update(event.body);
+    const correctSignature = hmac.digest('hex');
+    if (signature !== correctSignature) {
+      return {
+          statusCode: 200,
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+          },
+          body: JSON.stringify({
+              error: 'Signature was not correct, check your webhook secret and verify the serverless handler uses the same',
+          }),
+      };
+    }
 
     if (data.event.type !== 'Message.created') {
         // skip

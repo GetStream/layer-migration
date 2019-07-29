@@ -9,10 +9,10 @@ We are still working to make it easier to export data from Layer. Following the 
 
 - Cleanup Readme & Document Stream account setup
 - More docs on how to setup serverless
-- Webhook signature validation
 - Test coverage on conversion logic...
 - Easy setup of React demo app for browsing your data...
 - Go based generic endpoint run by Stream so you don't need your own webhook
+- Support Layer Parts Content syntax (https://docs.layer.com/reference/webhooks/message.obj#messages)
 
 ## Step 1 - Layer Chat Data Export, Creating an Export
 
@@ -127,14 +127,18 @@ Have a look at the serverless folder. It includes a functional example webhook o
 You can set the webhook using this command:
 
 ```
-layer-migrate webhook --url yourwebhookurl
+layer-migrate webhook --url yourwebhookurl --secret yourwebhooksecret
 ```
 
-And test it like this:
+For the webhook secret you can use any random string. You just need to be sure to use the same secret when validating the webhook signature.
+
+You can test the webhook like this.
 
 ```
 layer-migrate test-webhook
 ```
+
+The NGROK tool will come in handy as well.
 
 
 ## Step 5 - React/ iOS/ React Native
