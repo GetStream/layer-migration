@@ -107,13 +107,13 @@ Under the application, you can find your Stream App Key as well as your Stream A
 
 ![](https://i.imgur.com/Br30g5H.png)
 
-## Step 3 - Import to Stream
+## Step 4 - Import to Stream
 
 Simply email support@getstream.io with your data export. It typically takes 1 business day to import the data; however, smaller data exports will take less time.
 
 > Note: Depending on your security preferences you can either send us the decrypted file, or the encrypted version with the key to decode it.
 
-## Step 4 - Webhooks (optional)
+## Step 5 - Webhooks (optional)
 
 You can start syncing writes from Stream to Layer via webhooks. This is especially useful if you have mobile clients where it takes a while to update.
 
@@ -191,7 +191,7 @@ You can test the webhook like this.
 $ layer-migrate test-webhook
 ```
 
-## Step 5 - React / iOS / React Native
+## Step 6 - React / iOS / React Native
 
 The stream support team will send you a fully functional react example for testing your imported data. You'll want to review these 4 tutorials to learn more about how Stream works:
 
@@ -200,6 +200,6 @@ The stream support team will send you a fully functional react example for testi
 -   [iOS/Swift Chat Tutorial](https://getstream.io/tutorials/ios-chat/)
 -   [Chat API Tour](https://getstream.io/chat/get_started/)
 
-## Step 6 - Migrate the UI
+## Step 7 - Migrate the UI
 
 Implement the UI that you want for your chat, and flip the switch. Customizing Stream's libraries is typically easier than starting from scratch.
