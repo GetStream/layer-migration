@@ -2,16 +2,8 @@
 
 [Layer's API is shutting down](https://getstream.io/blog/layer-shutting-down-all-chat-operations/) October 30th leaving many customers in a difficult position. This guide shows you how to export your data from Layer and safely migrate to [Stream](https://getstream.io/chat/).
 
-This is a work in progress. The automatic import functionality on Stream's side is tested by many customers.
-
-We are still working to make it easier to export data from Layer. Following the steps in this repo will be easier in a few days.
-
-## TODO
-
--   Easy uploads of the export to Stream via an API instead of email
--   Easy setup of React demo app for browsing your data...
--   Go based generic endpoint run by Stream so you don't need your own webhook
--   Test coverage on conversion logic...
+The automatic import functionality on Stream's side is tested by many customers.
+Note that it can take a while to generate a Layer export, so you probably want to start and download on just in case.
 
 ## Step 1 - Layer Chat Data Export / Creating an Export
 
