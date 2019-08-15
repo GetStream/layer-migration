@@ -24,7 +24,7 @@ function getStreamClient() {
 	}
 
 	if (!process.env.STREAM_API_SECRET) {
-		throw Error('Environment variable STREAM_API_SECRET is not defined');
+		throw Error('Environment variable STREAM_API_SECRET is not defined!');
 	}
 
 	const client = new StreamChat(
@@ -142,7 +142,7 @@ export const layer = async event => {
 	const signature = event.headers['layer-webhook-signature'];
 
 	if (!process.env.WEBHOOK_SECRET) {
-		console.log('WEBHOOK secret is not defined');
+		console.log('WEBHOOK secret is not defined!');
 	}
 
 	const hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
@@ -189,8 +189,10 @@ export const layer = async event => {
 	// lookup the conversation...
 	const chatClient = getStreamClient();
 	const streamChannel = chatClient.channel(channel.type, channel.id, {
+		layer_conversation_id: channel.layer_conversation_id,
+		members: channel.members,
 		created_by: {
-			id: 'layer_sync',
+			id: channel.sync_source,
 			name: 'Layer Sync',
 		},
 	});
