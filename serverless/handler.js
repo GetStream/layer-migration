@@ -140,12 +140,17 @@ export const layer = async event => {
 	// Validate the layer webhook data
 	// https://docs.layer.com/reference/webhooks/payloads#validating-payload-integrity
 	const signature = event.headers['layer-webhook-signature'];
+
 	if (!process.env.WEBHOOK_SECRET) {
 		console.log('WEBHOOK secret is not defined');
 	}
+
 	const hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
+
 	hmac.update(event.body);
+
 	const correctSignature = hmac.digest('hex');
+
 	if (signature !== correctSignature) {
 		return {
 			statusCode: 403,
@@ -184,7 +189,10 @@ export const layer = async event => {
 	// lookup the conversation...
 	const chatClient = getStreamClient();
 	const streamChannel = chatClient.channel(channel.type, channel.id, {
-		created_by: { id: 'layer_sync', name: 'layer sync' },
+		created_by: {
+			id: 'layer_sync',
+			name: 'Layer Sync',
+		},
 	});
 
 	await streamChannel.create();
