@@ -192,7 +192,7 @@ export const layer = async event => {
 		members: channel.members,
 		created_by: {
 			id: channel.sync_source,
-			name: 'Layer Sync',
+			name: 'Stream Layer Sync',
 		},
 	});
 
