@@ -83,10 +83,9 @@ function convertMessage(data, user) {
 	}
 
 	const streamMessage = {
+		id: messageUUID,
 		user,
 		text,
-		//created_at: message.sent_at,
-		id: messageUUID,
 		attachments,
 	};
 
