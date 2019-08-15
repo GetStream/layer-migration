@@ -20,10 +20,11 @@ function getUUIDFromURL(url) {
  */
 function getStreamClient() {
 	if (!process.env.STREAM_API_KEY) {
-		throw Error(`Environment variable STREAM_API_KEY is not defined`);
+		throw Error('Environment variable STREAM_API_KEY is not defined!');
 	}
+
 	if (!process.env.STREAM_API_SECRET) {
-		throw Error(`Environment variable STREAM_API_SECRET is not defined`);
+		throw Error('Environment variable STREAM_API_SECRET is not defined');
 	}
 
 	const client = new StreamChat(
