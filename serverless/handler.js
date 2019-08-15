@@ -1,12 +1,13 @@
 import { StreamChat } from 'stream-chat';
-import axios from 'axios';
+import crypto from 'crypto';
+
 const LayerChat = require('../src/client');
-const crypto = require('crypto');
 
 const STREAM_CHAT_TYPE = 'messaging';
 
 function getUUIDFromURL(url) {
 	const parts = url.split('/');
+
 	if (parts.length) {
 		return parts[parts.length - 1];
 	}
@@ -44,8 +45,10 @@ function convertPartToAttachment(part) {
 	// https://docs.layer.com/xdk/webxdk/messages#message-parts
 	// https://docs.layer.com/reference/webhooks/message.obj#messages
 	const t = part.mime_type;
+
 	// start by simply copying the part data
 	let attachment = Object.assign({}, part);
+
 	if (t === 'application/json') {
 		// some layer customers store json in the parts
 		attachment = Object.assign(attachment, JSON.parse(part.body));
@@ -70,6 +73,7 @@ function convertMessage(data, user) {
 	if (parts[0].mime_type === 'text/plain') {
 		text = parts[0].body;
 	}
+
 	const attachments = [];
 	for (const part of parts) {
 		if (part.mime_type !== 'text/plain') {
@@ -96,24 +100,28 @@ async function convertChannel(data) {
 	const conversationUUID = conversationURL.split('/')[
 		conversationURL.split('/').length - 1
 	];
+
 	const l = LayerChat.LayerClientFromEnv();
+
 	const conversation = await l.conversation(conversationUUID);
 	// channels are pretty similar to conversations...
 	// metadata needs to be imploded
 	// created_at and updated_at are the same
 	// id and chat type are different
 	const streamChannel = conversation.metadata || {};
+
 	streamChannel.type = STREAM_CHAT_TYPE;
 	streamChannel.id = conversationUUID;
 	streamChannel.created_at = conversation.created_at;
 	streamChannel.updated_at = conversation.updated_at;
 	streamChannel.layer_conversation_id = conversationUUID;
 	streamChannel.sync_source = 'webhook';
-	const members = [];
 
+	const members = [];
 	for (const p of conversation.participants) {
 		members.push(p.user_id);
 	}
+
 	streamChannel.members = members;
 
 	return streamChannel;
@@ -167,14 +175,17 @@ export const layer = async event => {
 	const channel = await convertChannel(data);
 	const user = convertUser(data);
 	const message = convertMessage(data, user);
+
 	console.log('converted channel', channel);
 	console.log('converted user', user);
 	console.log('converted message', message);
+
 	// lookup the conversation...
 	const chatClient = getStreamClient();
 	const streamChannel = chatClient.channel(channel.type, channel.id, {
 		created_by: { id: 'layer_sync', name: 'layer sync' },
 	});
+
 	await streamChannel.create();
 	await streamChannel.sendMessage(message);
 
