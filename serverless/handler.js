@@ -185,8 +185,17 @@ export const layer = async event => {
 	console.log('converted user', user);
 	console.log('converted message', message);
 
-	// lookup the conversation...
 	const chatClient = getStreamClient();
+
+	channel.members.forEach(member => {
+		await chatClient.updateUsers([
+			{
+				id: member.user_id,
+				role: 'user',
+			},
+		]);
+	});
+
 	const streamChannel = chatClient.channel(channel.type, channel.id, {
 		layer_conversation_id: channel.layer_conversation_id,
 		members: channel.members,
