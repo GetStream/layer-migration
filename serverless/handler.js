@@ -187,11 +187,13 @@ export const layer = async event => {
 
 	const chatClient = getStreamClient();
 
-	const users = channel.members.map(member => {
-		return {
-			id: member.user_id,
-			role: 'user',
-		};
+	const users = channel.members.map(members => {
+		members.forEach(member => {
+			return {
+				id: member.user_id,
+				role: 'user',
+			};
+		});
 	});
 	await chatClient.updateUsers(users);
 
