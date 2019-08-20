@@ -190,7 +190,7 @@ export const layer = async event => {
 	const users = channel.members.map(members => {
 		members.forEach(member => {
 			return {
-				id: member.user_id,
+				id: member,
 				role: 'user',
 			};
 		});
