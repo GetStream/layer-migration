@@ -111,7 +111,13 @@ async function convertChannel(data) {
 	const streamChannel = conversation.metadata || {};
 
 	streamChannel.type = STREAM_CHAT_TYPE;
-	streamChannel.id = conversationUUID;
+
+	if (conversation.distinct) {
+		streamChannel.id = conversationUUID;
+	} else {
+		streamChannel.id = conversationUUID;
+	}
+
 	streamChannel.created_at = conversation.created_at;
 	streamChannel.updated_at = conversation.updated_at;
 	streamChannel.layer_conversation_id = conversationUUID;
@@ -141,7 +147,7 @@ export const layer = async event => {
 	const signature = event.headers['layer-webhook-signature'];
 
 	if (!process.env.WEBHOOK_SECRET) {
-		console.log('WEBHOOK secret is not defined!');
+		console.log('WEBHOOK_SECRET is not defined!');
 	}
 
 	const hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
@@ -164,7 +170,6 @@ export const layer = async event => {
 	}
 
 	if (data.event.type !== 'Message.created') {
-		// skip
 		return {
 			statusCode: 200,
 			headers: {
@@ -187,12 +192,11 @@ export const layer = async event => {
 
 	const chatClient = getStreamClient();
 
-	const users = channel.members.map(member => {
-		return {
-			id: member,
-			role: 'user',
-		};
-	});
+	const users = channel.members.map(member => ({
+		id: member,
+		role: 'user',
+	}));
+
 	await chatClient.updateUsers(users);
 
 	const streamChannel = chatClient.channel(channel.type, channel.id, {
@@ -216,12 +220,10 @@ export const layer = async event => {
 	};
 };
 
-export const verify = async event =>
-	// return the verification_challenge param
-	({
-		statusCode: 200,
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-		},
-		body: event.queryStringParameters.verification_challenge,
-	});
+export const verify = async event => ({
+	statusCode: 200,
+	headers: {
+		'Access-Control-Allow-Origin': '*',
+	},
+	body: event.queryStringParameters.verification_challenge,
+});
