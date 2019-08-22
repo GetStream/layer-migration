@@ -112,8 +112,8 @@ async function convertChannel(data) {
 
 	streamChannel.type = STREAM_CHAT_TYPE;
 
-	if (conversation.distinct) {
-		streamChannel.id = conversationUUID;
+	if (!conversation.distinct) {
+		streamChannel.id = '';
 	} else {
 		streamChannel.id = conversationUUID;
 	}
