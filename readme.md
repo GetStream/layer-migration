@@ -191,8 +191,9 @@ The stream support team will send you a fully functional react example for testi
 -   [React Chat Tutorial](https://getstream.io/chat/react-chat/tutorial/)
 -   [React Native Chat Tutorial](https://getstream.io/chat/react-native-chat/tutorial/)
 -   [iOS/Swift Chat Tutorial](https://getstream.io/tutorials/ios-chat/)
+-   [Android Chat Tutorial/ Java/ Kotlin](https://getstream.io/tutorials/android-chat/#java)
+
 -   [Chat API Tour](https://getstream.io/chat/get_started/)
--   Android is under development, expected launch is mid August
 
 ## Step 7 - Migrate the UI
 
